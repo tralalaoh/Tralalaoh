@@ -9,10 +9,9 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:7.0.4")
-        // Cloudstream gradle plugin which makes everything work and builds plugins
+        classpath("com.android.tools.build:gradle:8.0.2")
         classpath("com.github.recloudstream:gradle:master-SNAPSHOT")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
     }
 }
 
@@ -24,9 +23,11 @@ allprojects {
     }
 }
 
-fun Project.cloudstream(configuration: CloudstreamExtension.() -> Unit) = extensions.getByName<CloudstreamExtension>("cloudstream").configuration()
+fun Project.cloudstream(configuration: CloudstreamExtension.() -> Unit) = 
+    extensions.getByName<CloudstreamExtension>("cloudstream").configuration()
 
-fun Project.android(configuration: BaseExtension.() -> Unit) = extensions.getByName<BaseExtension>("android").configuration()
+fun Project.android(configuration: BaseExtension.() -> Unit) = 
+    extensions.getByName<BaseExtension>("android").configuration()
 
 subprojects {
     apply(plugin = "com.android.library")
@@ -34,44 +35,35 @@ subprojects {
     apply(plugin = "com.lagradost.cloudstream3.gradle")
 
     android {
-        compileSdkVersion(30)
+        compileSdkVersion(33)
 
         defaultConfig {
             minSdk = 21
-            targetSdk = 30
+            targetSdk = 33
         }
 
         compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_1_8
-            targetCompatibility = JavaVersion.VERSION_1_8
+            sourceCompatibility = JavaVersion.VERSION_11
+            targetCompatibility = JavaVersion.VERSION_11
         }
 
         tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
             kotlinOptions {
-                jvmTarget = "1.8"
-                freeCompilerArgs = listOf("-Xjvm-default=all")
+                jvmTarget = "11"
             }
         }
     }
 
     dependencies {
         val implementation by configurations
-        val testImplementation by configurations
-        val androidTestImplementation by configurations
-
-        // Stubs for all Cloudstream classes
+        
         implementation("com.github.recloudstream:cloudstream:master-SNAPSHOT")
-
-        // these dependencies can include any of those which are added by the app,
-        // but you dont need to include any of them if you dont need them
-        // https://github.com/recloudstream/cloudstream/blob/master/app/build.gradle.kts
-
-        implementation(kotlin("stdlib")) // adds standard kotlin features
-        implementation("com.github.Blatzar:NiceHttp:0.3.2") // http library
-        implementation("org.jsoup:jsoup:1.13.1") // html parser
+        implementation(kotlin("stdlib"))
+        implementation("com.github.Blatzar:NiceHttp:0.4.4")
+        implementation("org.jsoup:jsoup:1.15.3")
     }
 }
 
-task<Delete>("clean") {
+tasks.register<Delete>("clean") {
     delete(rootProject.buildDir)
 }
