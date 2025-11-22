@@ -1,0 +1,8 @@
+{
+    "name": "Turkish123 Repository",
+    "description": "Watch Turkish series with English subtitles",
+    "manifestVersion": 1,
+    "pluginLists": [
+        "https://raw.githubusercontent.com/tralalaoh/Tralalaoh/builds/plugins.json"
+    ]
+}

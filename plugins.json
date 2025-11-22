@@ -1,0 +1,13 @@
+[
+    {
+        "name": "Turkish123",
+        "url": "https://raw.githubusercontent.com/tralalaoh/Tralalaoh/builds/Turkish123.cs3",
+        "version": 1,
+        "description": "Watch Turkish series with English subtitles from Turkish123",
+        "authors": ["Tralalaoh"],
+        "status": 1,
+        "tvTypes": ["TvSeries"],
+        "language": "en",
+        "iconUrl": "https://www.google.com/s2/favicons?domain=hds.turkish123.com&sz=128"
+    }
+]
